@@ -1,4 +1,6 @@
 # import needed libraries
+import time
+
 import random as rnd
 import pandas as pd
 import numpy as np
@@ -17,42 +19,42 @@ st.header('Choose a DRM version between those below')
 
 SIZE = 400
 
-canvas_result = st_canvas(
-    fill_color='#000000',
-    stroke_width=20,
-    stroke_color='#FFFFFF',
-    background_color='#000000',
-    width=SIZE,
-    height=SIZE,
-    key='canvas')
+col1, col2 = st.columns([3, 2])
 
-# define stats model performance variables in session-state object
-if 'tp' not in st.session_state:
-    st.session_state.tp = 0
-if 'tn' not in st.session_state:
-    st.session_state.tn = 0
-if 'num_of_predictions' not in st.session_state:
-    st.session_state.num_pred = 0
-if 'accuracy' not in st.session_state:
-    st.session_state.accuracy = 0
+col1.subheader("Draw any number from 0 to 9 here")
+with col1:
+    canvas_result = st_canvas(
+        fill_color='#000000',
+        stroke_width=20,
+        stroke_color='#FFFFFF',
+        background_color='#000000',
+        width=SIZE,
+        height=SIZE,
+        key='canvas')
+
+# plot input refactored image
+col2.subheader("Model image input")
+img = cv2.resize(canvas_result.image_data.astype('uint8'), (28, 28))
+rescaled = cv2.resize(img, (SIZE, SIZE), interpolation=cv2.INTER_NEAREST)
+col2.image(rescaled)
 
 # define increment count functions
 def increment_tp():
-    st.session_state.tp += 1
+    tp += 1
 def increment_tn():
-    st.session_state.tn += 1
+    tn += 1
 def increment_num_pred():
-    st.session_state.num_pred += 1
+    num_of_pred += 1
 def calc_accuracy():
     # return model accuracy
-    st.session_state.accuracy = ((st.session_state.tp / st.session_state.num_pred) * 100)
-    st.write(f'num of predictions: {st.session_state.accuracy}')
+    accuracy = ((tp / num_of_pred) * 100)
+    st.write(f'num of predictions: {accuracy}')
 
-# plot input refactored image
-img = cv2.resize(canvas_result.image_data.astype('uint8'), (28, 28))
-rescaled = cv2.resize(img, (SIZE, SIZE), interpolation=cv2.INTER_NEAREST)
-st.write('Model Input')
-st.image(rescaled)
+# define stats model performance variables in session-state object
+tp = 0
+tn = 0
+num_of_pred = 0
+accuracy = 0
 
 val = ''
 
@@ -63,6 +65,10 @@ if st.button('Predict'):
     val = model.predict(test_x.reshape(1, 28, 28))
     # inject num of predictions count
     increment_num_pred()
+    # progress bar (viz only)
+    with st.spinner('Wait for it...'):
+        time.sleep(3)
+    st.success('Done!')
     # return predicted digit / num of predictions
     st.write(f'result: {np.argmax(val[0])}')
     st.write(f'num of predictions: {st.session_state.num_pred}')
