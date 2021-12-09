@@ -107,7 +107,6 @@ elif version_option == 'V2':
         accuracy = st.session_state.accuracy
         st.write(f'Accuracy score: {accuracy}')
 
-
     st.button('Predict', on_click=predict)
 
 
