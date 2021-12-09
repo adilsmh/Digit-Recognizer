@@ -11,8 +11,8 @@ from tensorflow.keras.models import load_model
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
-df_test = pd.read_csv('data/test/raw/test.csv')
-model = load_model('models/model_v1.h5')
+df_test = pd.read_csv('./data/test/raw/test.csv')
+model = load_model('./models/model_v1.h5')
 
 # define stats model performance variables in session-state object
 if 'num_of_pred' not in st.session_state:
