@@ -79,6 +79,8 @@ elif version_option == 'V2':
     def predict():
         # instantiate model for prediction
         test_x = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # normalize image for modeling performance
+        test_x = test_x/255.0
         # instantiate model for prediction
         val = model.predict(test_x.reshape(1, 28, 28))
         # progress bar (viz only)
