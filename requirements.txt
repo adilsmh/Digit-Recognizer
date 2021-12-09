@@ -1,6 +1,7 @@
-heroku==0.1.4
-keras==2.7.0
-Keras-Preprocessing==1.1.2
-matplotlib @ file:///C:/ci/matplotlib-suite_1613408055530/work
+matplotlib==3.3.4
 numpy==1.21.4
-pandas @ file:///C:/ci/pandas_1618365634936/work
+opencv_python==4.5.4.60
+pandas==1.2.4
+streamlit==1.1.0
+streamlit_drawable_canvas==0.8.0
+tensorflow==2.7.0
