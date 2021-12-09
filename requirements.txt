@@ -4,4 +4,4 @@ opencv_python==4.5.4.60
 pandas==1.2.4
 streamlit==1.1.0
 streamlit_drawable_canvas==0.8.0
-tensorflow==2.7.0
+tensorflow-cpu==2.7.0
